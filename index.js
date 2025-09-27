@@ -19,5 +19,11 @@ app.use('/api/doctor',doctorRoute);
 app.use('/api/patient',patientRoute);
 app.use('/api/app',appRoute);
 app.use('/api/news',newsRoute);
+app.get('/',(req,res)=>{
+    res.send({
+        activeStatus:true,
+        error:false
+    })
+})
 
 app.listen(port,()=>console.log(`Server Running on Port : ${port} 🔥`));
