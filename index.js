@@ -13,7 +13,9 @@ mongoose.connect('mongodb://127.0.0.1:27017/healthnexus')
 .catch((err)=>console.log(`Error 😮 :${err}`));
 
 app.use(express.json());
-app.use(cors());
+app.use(cors({
+    origin:["https://health-nexus-frontend.vercel.app/"]
+}));
 app.use('/api/admin',adminRoute);
 app.use('/api/doctor',doctorRoute);
 app.use('/api/patient',patientRoute);
