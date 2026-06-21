@@ -2,12 +2,26 @@ const express = require('express');
 const patientModel = require('../Model/patientModel');
 const patientRoute = express.Router();
 
+const getPatientErrorMessage = (error) => {
+    if (error.code === 11000) {
+        return 'Email already exists';
+    }
+
+    if (error.name === 'ValidationError') {
+        return Object.values(error.errors)
+            .map((item) => item.message)
+            .join(', ');
+    }
+
+    return error.message || 'Something went wrong';
+};
+
 patientRoute.get('',async (req,res)=>{
     try {
         const patient = await patientModel.find();
         res.json({"msg":"Success","value":patient})
     } catch (error) {
-        res.json({"msg":error});
+        res.status(500).json({"msg":getPatientErrorMessage(error)});
     }
 });
 patientRoute.get('/:id',async (req,res)=>{
@@ -16,7 +30,7 @@ patientRoute.get('/:id',async (req,res)=>{
         const patient = await patientModel.findById(id);
         res.json({"msg":"Success","value":patient})
     } catch (error) {
-        res.json({"msg":error});
+        res.status(500).json({"msg":getPatientErrorMessage(error)});
     }
 });
 patientRoute.post('',async (req,res)=>{
@@ -24,7 +38,7 @@ patientRoute.post('',async (req,res)=>{
         await patientModel.create(req.body);
         res.json({"msg":"Success"})
     } catch (error) {
-        res.json({"msg":error});
+        res.status(400).json(error);
     }
 })
 
@@ -46,7 +60,7 @@ patientRoute.post('/log',async (req,res)=>{
         }
         
     } catch (error) {
-        res.json({"msg":error});
+        res.status(500).json({"msg":getPatientErrorMessage(error)});
     }
     
 })
@@ -54,10 +68,10 @@ patientRoute.post('/log',async (req,res)=>{
 patientRoute.put('/:id',async (req,res)=>{
     try {
         const id = req.params.id;
-        await patientModel.findByIdAndUpdate(id,req.body);
+        await patientModel.findByIdAndUpdate(id,req.body,{ runValidators:true });
         res.json({"msg":"Success",})
     } catch (error) {
-        res.json({"msg":error});
+        res.status(400).json({"msg":getPatientErrorMessage(error)});
     }
 })
 
@@ -67,7 +81,7 @@ patientRoute.delete('/:id',async (req,res)=>{
         await patientModel.findByIdAndDelete(id);
         res.json({"msg":"Success"})
     } catch (error) {
-        res.json({"msg":error});
+        res.status(500).json({"msg":getPatientErrorMessage(error)});
     }
 })
 

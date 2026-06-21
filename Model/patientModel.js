@@ -2,15 +2,19 @@ const mongoose  = require('mongoose');
 const patientSchema = mongoose.Schema({
     name:{
         type:String,
+        trim:true,
         required:true
     },
     email:{
         type:String,
+        trim:true,
+        lowercase:true,
         required:true,
         unique:true
     },
     number:{
         type:String,
+        trim:true,
         required:true
     },
     password:{
@@ -22,20 +26,22 @@ const patientSchema = mongoose.Schema({
         required:true
     },
     bloodgrp:{
-        type:String,
-        required:true
+        type:String
+        // required:true
     },
     age:{
         type:String,
+        trim:true,
         required:true
     },
     altnumber:{
         type:String,
-        required:true
+        trim:true
     },
     address:{
         type:String,
-        required:true
+        trim:true,
+        // required:true
     },
     status:{
         type:String,

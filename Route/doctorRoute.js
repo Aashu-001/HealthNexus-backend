@@ -1,6 +1,7 @@
 const express = require('express');
 const doctorModel = require('../Model/doctorModel');
 const doctorRoute = express.Router();
+
 doctorRoute.get('',async(req,res)=>{
     try {
         const doc = await doctorModel.find();

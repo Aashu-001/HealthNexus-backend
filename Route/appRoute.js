@@ -20,6 +20,15 @@ appRoute.get('',async(req,res)=>{
     }
 })
 
+appRoute.get('/all',async(req,res)=>{
+    try {
+        const app = await appModel.find().populate("pid").populate("did");
+        res.json({"msg":"Success","value":app});
+    } catch (error) {
+        res.json({"msg":error});
+    }
+})
+
 appRoute.put('/:id',async(req,res)=>{
     try {
         const id = req.params.id;

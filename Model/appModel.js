@@ -1,12 +1,12 @@
 const mongoose = require("mongoose");
 const appSchema = mongoose.Schema({
     pid:{
-        type:String,
+        type:mongoose.Schema.Types.ObjectId,
         ref:"patient",
         required:true
     },
     did:{
-        type:String,
+        type:mongoose.Schema.Types.ObjectId,
         ref:"doctor",
         required:true
     },

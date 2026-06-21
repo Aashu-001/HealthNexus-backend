@@ -9,6 +9,7 @@ adminRoute.post('/log',async (req,res)=>{
     try {
         const {email,password} = req.body;
         const ad =await  adminModel.findOne({email});
+        console.log(ad);
         if(!ad){
             res.json({"msg":"Not Found"});
         }
@@ -26,5 +27,14 @@ adminRoute.post('/log',async (req,res)=>{
         res.json({"msg":error});
     }
     
+})
+
+adminRoute.post('/reg',async(req,res)=>{
+     const {email,password} = req.body;
+     const adm = adminModel.create({email,password});
+     if(!adm){
+        res.json({"msg":"Something went wrong"});
+     }
+     res.json({"msg":"Success"})
 })
 module.exports = adminRoute;
