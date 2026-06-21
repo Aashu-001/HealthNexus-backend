@@ -14,7 +14,7 @@ const enquiryRoute = require('./Route/enquiryRoute');
 
 const app = express();
 const port = process.env.PORT || 8000;
-const mongoUri = process.env.MONGODB_URI || 'mongodb+srv://aashush800660_db_user:Aashu9411634659@cluster0.cjhwdqn.mongodb.net/healthnexus';
+const mongoUri = process.env.MONGODB_URI ;
 
 mongoose.connect(mongoUri)
     .then(() => console.log('MongoDB connected successfully'))
